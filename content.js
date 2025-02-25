@@ -1,15 +1,17 @@
 // Function to highlight repository visibility
 function highlightParentSpanBorder() {
 	document.querySelectorAll("body *").forEach((el) => {
+		// Check if the element has exactly the text "public" or "private" with no other content
+		const hasOnlyDirectText =
+			el.childNodes.length === 1 &&
+			el.childNodes[0].nodeType === Node.TEXT_NODE;
 		const text = el.textContent.trim().toLowerCase();
-		if (text === "public" || text === "private") {
-			const parentSpan = el.closest("span");
-			if (parentSpan) {
-				if (text === "public") {
-					parentSpan.style.border = "1px solid #97fd30"; // vivid green border
-				} else if (text === "private") {
-					parentSpan.style.border = "1px solid #fd532f"; // vivid red border
-				}
+
+		if (hasOnlyDirectText && (text === "public" || text === "private")) {
+			if (text === "public") {
+				el.style.border = "1px solid #97fd30"; // vivid green border
+			} else if (text === "private") {
+				el.style.border = "1px solid #fd532f"; // vivid red border
 			}
 		}
 	});
